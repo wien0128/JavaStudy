@@ -77,3 +77,13 @@ getMessage()로 조회 가능
 = 예외도 객체기에 부모 예외를 잡아 모든 예외를 처리하거나
   자식 예외만 잡아 개별 처리가 가능하다
 
+Try-with-Resources
+- try에서 외부 자원을 사용하고 try가 끝나면 외부 자원을 반납하는 패턴
+- 워낙 자주 쓰기에 자바 7에서 편의 기능으로 도입
+- 인터페이스를 구현하여 try가 끝나면 자동으로 외부 자원을 반납한다.
+try (Resource resource = new Resource()) {
+    // Do Something...
+}
+- try() 안에 자원은 블럭이 끝나는 순간 AutoCloseable.close() 호출 후 자원 해제
+- catch나 finally 블럭과는 무관하게 실행
+
