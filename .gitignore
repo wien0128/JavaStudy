@@ -1,7 +1,8 @@
 ### IntelliJ IDEA ###
 out/
 .idea/
-JavaStudy.iml
-
+*.iml
+*.ipr
+*.iws
 
 
