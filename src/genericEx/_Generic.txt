@@ -11,6 +11,7 @@ class Generic<T> {
 - 타입 추론 후 컴파일러는 타입 정보를 기반으로 코드 가정 후 반영
 - 사용하는 생성 시점에 내부에서 타입을 결정하는 것
 - !사용할 타입을 미리 결정하지 않는다는 점이 핵심!
+- 코드 재사용과 타입 안정성을 챙길 수 있음
 
 1. 메소드는 매개변수에 인자를 전달해서 사용할 값을 결정
 2. 제네릭 클래스는 타입 매개변수에 타입 인자를 전달해 타입을 결정
@@ -24,9 +25,19 @@ class Generic<T> {
 - Generic<T>, T가 타입 매개변수
 
 타입 인자
-- ! 타입 인자로 primitive type(int, double) 사용 불가
+- ! 타입 인자로 primitive type(int, double) 사용 불가 !
 - 제네릭 타입을 사용할 때 제공되는 실제 타입
 - String, Integer, Double, etc.
+
+제네릭 메소드
+= public static <T> void printArray(T[] arr) { ... }
+- 타입에 상관없이 모든 배열 출력 가능
+
+제네릭 인터페이스
+= public interface Comparable<T> {
+    int compareTo(T o);
+}
+- 위와 같이 다양한 타입 객체 비교 가능
 
 제네릭 명명 관례
 E - Element
@@ -36,5 +47,8 @@ T - Type
 V - Value
 S, U, V, etc. - 2nd, 3rd, 4th types
 
-Raw Type (쓰지 말것, 알고만 있길)
-- 
+Raw Type (쓰지 말것, 알고만 있길) or 원시 타입
+= GenericBox integerBox = new Generic();
+- 위와 같이 <> 없이 사용하는 것
+- 내부의 타입 매개변수가 Object로 들어감, 쓰지 말것
+- 하위 호환을 위해 존재함. C++의 struct 같은 건가?
