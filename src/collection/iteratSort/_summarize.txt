@@ -1,0 +1,34 @@
+컬렉션 프레임워크 정리
+
+1. Collection 인터페이스의 필요성
+• 자바 컬렉션 프레임워크의 가장 기본적인 인터페이스로
+  자바에서 데이터 그룹을 다루는데 가장 기본적인 메서드들을 정의
+• 다양한 컬렉션 타입들이 공통적으로 따라야 하는 기본 규약을 정의
+
+2. Collection 인터페이스의 주요 메서드
+• add(E e): 컬렉션에 요소 추가
+• remove(Object o): 주어진 객체를 컬렉션에서 제거
+• size(): 컬렉션에 포함된 요소의 수 반환
+• isEmpty(): 컬렉션이 비어 있는지 확인
+• contains(Object o): 컬렉션이 특정 요소를 포함하고 있는지 확인
+• iterator(): 컬렉션의 요소에 접근하기 위한 반복자를 반환
+• clear(): 컬렉션의 모든 요소를 제거
+- Map을 제외한 모든 컬렉션 타입의 부모는 Collection.
+
+3. 선택 가이드
+• 순서가 중요하고, 중복이 허용되는 경우
+  : List, ArrayList가 일반적이지만 입출력이 빈번할 경우 LinkedList
+• 순서가 중요하지 않고, 중복을 허용하지 않는 경우
+  : HashSet, 순서를 유지해야 하면 LinkedHashSet, 정렬된 순서가 필요하면 TreeSet
+• 요소를 키-값 쌍으로 저장하려는 경우
+  : Map, 순서가 중요하지 않다면 HashMap, 순서를 유지해야 한다면 LinkedHashMap
+    정렬된 순서가 필요하면 TreeMap
+• 요소를 처리하기 전에 보관해야 하는 경우
+  : Queue, Deque, 스택/큐 구조 모두 ArrayDeque를 사용하는 것이 가장 빠름
+    우선순위에 따라 처리해야 한다면 PriorityQueue를 고려
+
+4. 실무에서는?
+• List - ArrayList
+• Set - HashSet
+• Map - HashMap
+• Queue - ArrayDeque
