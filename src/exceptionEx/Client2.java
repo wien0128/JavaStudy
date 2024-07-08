@@ -2,6 +2,6 @@ package exceptionEx;
 
 public class Client2 {
     public void call() {
-        throw new MyUncheckedException("ex");
+        throw new MyUncheckedException("thisIsJava");
     }
 }

@@ -6,6 +6,6 @@ package exceptionEx;
 
 public class Client {
     public void call() throws MyCheckedException {
-        throw new MyCheckedException("ex");
+        throw new MyCheckedException("thisIsJava");
     }
 }

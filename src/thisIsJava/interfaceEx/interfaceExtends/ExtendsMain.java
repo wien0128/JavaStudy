@@ -1,0 +1,22 @@
+package thisIsJava.interfaceEx.interfaceExtends;
+
+public class ExtendsMain {
+    public static void main(String[] args) {
+        InterfaceCImpl impl = new InterfaceCImpl();
+
+        InterfaceA ia = impl;
+        ia.methodA();
+        //ia.methodB();
+        System.out.println();
+
+        InterfaceB ib = impl;
+        ib.methodB();
+        //ia.methodA();
+        System.out.println();
+
+        InterfaceC ic = impl;
+        ic.methodA();
+        ic.methodB();
+        ic.methodC();
+    }
+}
