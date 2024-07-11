@@ -3,7 +3,7 @@ package thisIsJava.interfaceEx.anonymous;
 public class AnonymousMain {
     public static void main(String[] args) {
         
-        // 익명 구현 객체 
+        // 익명 구현 객체
         RemoteControl remoteControl = new RemoteControl() {
             @Override
             public void turnOn() {
