@@ -1,0 +1,80 @@
+[어노테이션]
+    - 클래스 또는 인터페이스를 컴파일하거나 실행할 때
+    어떻게 처리해야 할 것인지 알려주는 설정 정보
+
+1. 컴파일 시 사용하는 정보 전달
+2. 빌드 툴이 코드를 자동으로 생성할때 사용하는 정보 전달
+3. 실행시 특정 기능을 처리할 때 사용하는 정보 전달
+
+[어노테이션 타입 정의와 적용]
+
+public @interface AnnotationName {
+}
+@AnnotationName
+
+public @interface AnnotationName {
+    String prop1();
+    int prop2() default 1;
+}
+@AnnotationName(prop1= "Value");
+@AnnotationName(prop1= "Value", prop2= 3);
+
+public @interface AnnotationName {
+    String value();
+    int prop2() default 1;
+}
+@AnnotationName("Value");   // 디포틀 파라미터는 생략가능
+@AnnotationName(value= "Value", prop2= 3);  // 단, 둘 다 입력시 필수 입력
+
+
+[어노테이션 적용 대상]
+ElementType 열거 상수로 정의되어 있음.
+- TYPE = 클래스, 인터페이스, 열거 타입
+- ANNOTATION_TYPE = 어노테이션
+- FIELD = 필드
+- CONSTRUCTOR = 생성자
+- METHOD = 메소드
+- LOCAL_VARIABLE = 로컬 변수
+- PACKAGE = 패키지
+
+@Target 어노테이션으로 적용 대상 지정
+
+@Target( { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD } )
+public @interface AnnotationName {
+}
+
+@AnnotationName
+public Class ClassName {
+    @AnnotationName
+    private String fieldName;
+
+    //@AnnotationName, 생성자에 적용 불가
+    public ClassName() {}
+
+    @AnnotationName
+    public void methodName() {}
+}
+
+[어노테이션 유지 정책]
+RetentionPolicy 열거 상수에 정의되어 있음.
+- SOURCE = 컴파일 할 때 적용 = 컴파일된 후에 제거됨
+- CLASS = 메모리로 로딩할 때 적용 = 메모리로 로딩된 후에 제거됨
+- RUNTIME = 실행할 때 적용 = 계속 유지됨
+
+@Retention으로 유지 정책 지정
+기본 속성인 value는 RetentionPolicy 열거 상수 값을 가짐
+
+@Target ( { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD } )
+@Retention( RetentionPolicy.RUNTIME )
+public @interface AnnotationName{
+}
+
+[어노테이션 설정 정보 이용]
+어노테이션은 아무런 동작을 가지지 않는 설정 정보임.
+설정 정보를 가지고 동작을 제어하는 것은 애플리케이션의 몫.
+리플레셕을 이용해서 적용 대상으로부터 어노테이션 정보를 다음 메소드로 얻을 수 있음
+- boolean = isAnnotationPresent(AnnotationName.class) = 지정한 어노테이션이 적용되었는지 여부
+- Annotation = getAnnotation(AnnotationName.class)
+             = 지정한 어노테이션이 적용되어 있으면 어노테이션 리턴
+               그렇지 않다면 null 리턴
+- Annotation[] = getDeclaredAnnotations() = 적용된 모든 어노테이션을 리턴
