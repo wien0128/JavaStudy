@@ -91,3 +91,58 @@ public static void main(String[] args) {
 }
 
 - 스레드 풀(ThreadPool)
+•병렬 작업 증가로 인한 CPU와 메모리의 과부하로 인한 쓰로틀링을 방지하기 위해 고안
+•작업 처리에 사용되는 스레드를 제한된 개수만큼 정해 놓고 작업 Queue에 들어오는
+ 작업들을 스레드가 하나씩 맡아 처리하는 방식
+• java.util.concurrent 패키지에 ExecutorService 인터페이스와 Executors 클래스를 제공
+
+스레프풀 생성 메소드
+[메소드명(매개변수)], 초기 수, 코어 수, 최대 수
+newCachedThreadPool(), 0, 0, Integer.MAX_VALUE
+NewFixedThreadPool(int nTreads), 0, 생성된 수, nTreads
+
+ExecutorService executorService = Executors.newCachedTreadPool();
+- 초기 스레드와 코어 스레드 모두 0, 60초 동안 작업 없는 스레드는 제거
+
+ExecutorService executorService = Executors.newFixedThreadPool(5);
+- 초기 스레드는 0, 최대 5개까지 스레드 생성, 특징은 생성된 스레드를 제거하지 않음
+
+ExecutorService threadPool = new ThreadPoolExecutor(
+    3,                                  코어 스레드 개수
+    100,                                최대 스레드 개수
+    120L,                               놀고 있는 시간
+    TimeUnit.SECONDS,                   놀고 있는 시간 단위
+    new SynchronousQueue<Runnable>()    작업 큐
+)
+- 초기 스레드 0, 코어 스레드 3, 최대 스레드 100, 120초 동안 작업 없는 스레드는 제거
+
+• 스레드풀의 스레드는 데몬 스레드가 아니기에 main 스레드가 종료되더라도 종료되지 않는다.
+
+스레드풀 종료 메소드
+[리턴 타입], [메소드명(매개변수)]
+void, shutdown(), 현재 처리하는 작업 + 작업 큐에 대기하는 모든 작업을 처리 후 스레드풀 종료
+List<Runnable>, shutdownNow(), 현재 작업 중인 스레드를 interrupt 후 중지 스레드풀 종료 리턴 값은 작업 큐에 있던 미처리 작업의 목록
+
+작업 생성과 요청
+• 하나의 작업은 Runnable 또는 Callable 구현 객체로 표현
+• 둘의 차이점은 작업 처리 완료 후 리턴값의 여부
+
+• Runnable 익명 구현 객체
+new Runnable() {
+    @Override
+    public void run() {
+        스레드가 처리할 작업
+    }
+}
+• Callable 익명 구현 객체
+new Callable<T>() {
+    @Override
+    public T call() throws Exception {
+        스레드가 처리할 작업
+        return T;
+    }
+}
+- 작업 처리 요청 메소드
+[리턴 타입], [메소드명(매개변수)]
+void, execute(Runnable command), Runnable을 작업 큐에 저장, 작업 처리 결과 리턴 X
+Future<T>, submit(Callable<T> task), Callable을 작업 큐에 저장, 작업 처리 결과를 Future로 리턴

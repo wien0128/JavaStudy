@@ -4,54 +4,52 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-// 2000문제푼임스 25822 TwoPointer
-// O( N )
+// 두용액 2470 TwoPointer
+// 0에 가장 가까운 두 수의 합을 찾는 문제
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
 
-        double c = Double.parseDouble(br.readLine());
         int n = Integer.parseInt(br.readLine());
+        int[] solutions = new int[n];
 
-        int[] solved = new int[n];
-        st = new StringTokenizer(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; ++i) {
-            solved[i] = Integer.parseInt(st.nextToken());
+            solutions[i] = Integer.parseInt(st.nextToken());
         }
 
-        int maxFreezes = Math.min(2, (int) (c / 0.99));
-        int maxSolved = Arrays.stream(solved).max().orElse(0);
+        // 오름차순
+        Arrays.sort(solutions);
 
-        int l = 0, r = 0;   // 투 포인터
-        int freezeUsed = 0; // 사용한 프리즈 개수
-        int maxStreak = 0;  // 최대 스트릭 유지 일수
-        int curStreak = 0;  // 현재 스트릭 유지 일수
+        int l = 0, r = n - 1;
+        // 두 용액의 합들 중 0에 가장 가까운 값
+        int closestSum = Integer.MAX_VALUE;
+        // 두 용액의 합이 가장 0에 가까운 용액들
+        int sl = 0, sr = 0;
 
-        while (r < n) {
-            // i번째 날에 푼 문제가 있다면
-            if (solved[r] > 0) {
-                ++curStreak;
-                ++r;
-            } else {
-                // 프리즈를 사용할 수 있다면
-                if (freezeUsed < maxFreezes) {
-                    ++freezeUsed;
-                    ++curStreak;
-                    ++r;
-                } else {    // 프리즈를 사용할 수 없다면
-                    if (solved[l] == 0) {
-                        --freezeUsed;
-                    }
-                    --curStreak;
-                    ++l;
-                }
+        while (l < r) {
+            int curSum = solutions[l] + solutions[r];
+
+            // 현재 합의 절대값이 더 가까운 경우 갱신
+            if (Math.abs(curSum) < Math.abs(closestSum)) {
+                closestSum = curSum;
+                sl = solutions[l];
+                sr = solutions[r];
             }
-
-            maxStreak = Math.max(maxStreak, curStreak);
+            // 현재 합이 0인 경우 답을 찾았기에 종료
+            if (curSum == 0) {
+                break;
+            }
+            // 현재 합이 0보다 작으면 l 포인터를 오른쪽 이동
+            if (curSum < 0) {
+                ++l;
+            // 현재 합이 0보다 크면 r 포인터 왼쪽 이동
+            } else {
+                --r;
+            }
         }
 
-        System.out.println(maxStreak + "\n" + maxSolved);
+        System.out.println(sl + " " + sr);
     }
 }
