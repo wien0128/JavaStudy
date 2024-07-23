@@ -1,55 +1,59 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
 
-// 두용액 2470 TwoPointer
-// 0에 가장 가까운 두 수의 합을 찾는 문제
+// 회문 17609 TwoPointer
+// 회문과 유사회문을 판별해야 하는 문제
+
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(br.readLine());
 
-        int n = Integer.parseInt(br.readLine());
-        int[] solutions = new int[n];
-
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < n; ++i) {
-            solutions[i] = Integer.parseInt(st.nextToken());
+        StringBuilder sb = new StringBuilder();
+        while (t-- > 0) {
+            String s = br.readLine();
+            sb.append(isPalindrome(s)).append("\n");
         }
 
-        // 오름차순
-        Arrays.sort(solutions);
+        System.out.println(sb);
+    }
 
-        int l = 0, r = n - 1;
-        // 두 용액의 합들 중 0에 가장 가까운 값
-        int closestSum = Integer.MAX_VALUE;
-        // 두 용액의 합이 가장 0에 가까운 용액들
-        int sl = 0, sr = 0;
+    /**
+     * 주어진 {@code string}이 회문 또는 유사회문, 둘 다 아닌지 판별 메소드.
+     *
+     * @param s 판별해야 하는 문자열.
+     * @return int 0 회문, 1 유사회문, 2 둘 다 아님.
+     */
+    public static int isPalindrome(String s) {
+        int left = 0, right = s.length() - 1;
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return (checkSubPalindrome(s, left + 1, right) || checkSubPalindrome(s, left, right - 1)) ? 1 : 2;
+            }
+            ++left;
+            --right;
+        }
+        return 0;
+    }
 
+    /**
+     * 부분 {@code string}의 회문 판독 헬퍼 메소드.
+     *
+     * @param s 부분 문자열.
+     * @param l left 포인터.
+     * @param r right 포인터.
+     * @return boolean 부분 문자열이 회문일 경우 True, 아닐 경우 False.
+     */
+    private static boolean checkSubPalindrome(String s, int l, int r) {
         while (l < r) {
-            int curSum = solutions[l] + solutions[r];
-
-            // 현재 합의 절대값이 더 가까운 경우 갱신
-            if (Math.abs(curSum) < Math.abs(closestSum)) {
-                closestSum = curSum;
-                sl = solutions[l];
-                sr = solutions[r];
+            if (s.charAt(l) != s.charAt(r)) {
+                return false;
             }
-            // 현재 합이 0인 경우 답을 찾았기에 종료
-            if (curSum == 0) {
-                break;
-            }
-            // 현재 합이 0보다 작으면 l 포인터를 오른쪽 이동
-            if (curSum < 0) {
-                ++l;
-            // 현재 합이 0보다 크면 r 포인터 왼쪽 이동
-            } else {
-                --r;
-            }
+            ++l;
+            --r;
         }
-
-        System.out.println(sl + " " + sr);
+        return true;
     }
 }

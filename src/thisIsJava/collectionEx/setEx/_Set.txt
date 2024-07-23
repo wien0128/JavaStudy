@@ -1,0 +1,27 @@
+Set Collection
+
+• Set: 순서 보장 X, 중복 저장 X, 하나의 null만 저장 가능
+• 추가
+boolean add(E e): 객체 e를 성공적으로 저장하면 true, 중복 객체면 false 반환
+• 검색
+boolean contains(Object o): 객체 o가 저장되어 있는지 여부
+isEmpty(): Set이 비어 있는지 조사
+Iterator<E> iterator(): 저장된 객체를 한 번씩 가져오는 반복자 반환
+int size(): 저장되어 있는 전체 객체 수 반환
+• 삭제
+void clear(): 저장된 모든 객체 삭제
+boolean remove(Object o): 객체 o를 삭제
+
+Set Collection은 인덱스를 통한 조회나 검색을 지원하지 않음.
+1. for (E e : set) { ... }
+2. Iterator<E> iterator = set.iterator();
+    while (iterator.hasNext()) {
+        E e = iterator.next();
+    }
+
+• iterator 메소드
+boolean hasNext(): 가져올 객체가 있으면 true, 없으면 false 반환
+E next(): 컬렉션에서 객체 하나를 가져옴
+void remove(): next()로 가져온 객체를 Set 컬렉션에서 제거
+
+• HashSet: 동등 객체 중복 저장 X

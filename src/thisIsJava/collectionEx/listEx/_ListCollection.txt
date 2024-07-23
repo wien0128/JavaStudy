@@ -1,0 +1,25 @@
+List Collection
+
+• List: 객체를 인덱스로 관리, 순서 유지 보장, 중복 저장 가능
+- 객체를 저장하는 것이 아닌 객체의 주소를 저장함. 동일한 객체의 경우 동일한 주소가 저장.
+  null 또한 저장 가능.
+• 추가
+boolean add(E e) - 주어진 객체 e를 맨 끝에 추가
+void add(int index, E e) - index에 e를 추가
+set(int index, E e) - index의 객체를 e로 바꿈
+• 검색
+boolean contatins(Objects o) - 객체 o가 저장 여부
+E get(int index) - index의 객체를 반환
+isEmpty() - List가 비어 있는지 조사
+int size() - 저장된 전체 객체 수 반환
+• 삭제
+void claer() - 저장된 모든 객체 삭제
+E remove(int index) - index에 저장된 객체 삭제
+Boolean remove(Object o) - 주어진 객체 o를 삭제
+
+• ArrayList: 동적 배열(50% 씩 증가), 비동기화, 인덱스 접근, 반복자 지원
+
+• Vector: ArrayList와 동일한 내부, 동기화, 스레드 세이프
+
+• LinkedList: 객체 참조를 통한 연결 구조, 객체 추가&삭제에 대해 효율적
+
