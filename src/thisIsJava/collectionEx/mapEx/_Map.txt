@@ -18,3 +18,8 @@ V remove(Object key): 주어진 key와 일치하는 Map.Entry 삭제, 삭제가 
 
 • HashMap: 동등 객체 중복 저장 X
 hashCode() 리턴 값이 같고 equals()의 리턴값이 true면 동일 키로 보고 저장 X
+
+• Hashtable: HashMap과 내부 구조 동일, 동기화된 메소드 지원 따라서 스레드 세이프 보장
+
+• Properties: Hashtable의 자식 클래스, 키-값을 STring 으로 제한한 컬렉션.
+.properties 확장자를 가진 파일을 읽을 때 사용.

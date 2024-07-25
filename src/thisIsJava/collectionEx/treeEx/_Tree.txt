@@ -1,0 +1,35 @@
+Tree
+
+• TreeSet: 이진 트리 기반 Set Collection, 자동 정렬
+
+[리턴타입] | [메소드] | [설명]
+E | first() | 제일 낮은 객체 리턴
+E | last() | 제일 높은 객체 리턴
+E | lower(E e) | e 보다 바로 아래 객체 리턴
+E | higher(E e) | e 보다 바로 위 객체 리턴
+E | floor(E e) | e 와 동등한 객체가 있으면 리턴, 없다면 바로 아래 객체 리턴
+E | ceiling(E e) | e 와 동등한 객체가 있으면 리턴, 없다면 바로 위 객체 리턴
+E | pollFirst() | 제일 낮은 객체를 꺼내고 삭제
+E | pllLast() | 제일 높은 객체를 꺼내고 삭제
+Iterator<E> | descendingIterator() | 내림차순으로 정렬된 Iterator 리턴
+NavigableSet<E> | descendingSet() | 내리참순으로 정렬된 NavigableSet 리턴
+NavigableSet<E> | headSet( E toE, boolean inclusive ) | toE 보다 낮은 객체들을 NavigableSet 리턴,
+                                                        객체 포함 여부는 inclusive 값에 따라 달라짐
+NavigableSet<E> | tailSet( E fromE, boolean inclusive ) | fromE 보다 높은 객체들을 NavigableSet 리턴,
+                                                            객체 포함 여부는 inclusive 값에 따라 달라짐
+NavigableSet<E> | subSet( E fromE, boolean fromInclusive, E toE, boolean toInclusive )
+| fromE 부터 toE 까지의 객체들을 NavigableSet 리턴, 시작과 끝 객체 포함 여부는 inclusive 파라미터 값에 따라 달라짐
+
+• TreeMap: 이진 트리 기반 Map, 객체가 아닌 Entry를 저장, 키를 기준으로 자동 정렬
+메소드는 비슷함
+
+- Comparable 과 Comparator
+TreeSet 과 TreeMap 은 저장되는 객체가 Comparable Interface를 구현하고 있어야 자동 정렬 가능
+Wrapper Class 들은 이미 구현해 놓음. 커스텀 객체는 반드시 Comparable Interface를 구현해야 함.
+int compareTo(T o) {}, 객체 o 와 같으면 0, 작으면 음수, 크면 양수 리턴
+
+비교 기능이 없는 Comparable 비구현 객체를 저장하려면 TreeSet 혹은 TreeMap 생성 시
+비교자를 제공하면 된다.
+Comparator Interface를 구현하 객체를 비교자라 함. compare() 메소드를 오버라이딩 해야 함.
+TreeSet<E> treeSet = new TreeSet<>(new ComparatorImpl());
+TreeMap<K, V> treeMap = new TreeMap<>(new ComparatorImpl());
