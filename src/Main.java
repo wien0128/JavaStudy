@@ -1,45 +1,31 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-// 다이어트 1484 TwoPointer
-// x^2 - y^2 = G 를 만족하는 모든 x 를 찾는 문제
-// 전체 탐색 상한은 √G + 1 따라서 O(√G)
+// 첨탑밀어서부수기 28014 Greedy
+// O( N )
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = null;
 
-        int G = Integer.parseInt(br.readLine());
-        List<Integer> res = new ArrayList<>();
-        int low = 1;
-        int high = 1;
+        int n = Integer.parseInt(br.readLine());
 
-        while (low < high || high == 1) {
-            long lowSquare = (long) low * low;
-            long highSquare = (long) high * high;
-            long diff = highSquare - lowSquare;
+        st = new StringTokenizer(br.readLine());
 
-            if (diff == G) {
-                res.add(high);
+        int prevHeight = Integer.parseInt(st.nextToken());
+        int cnt = 1;
+        for (int i = 1; i < n; ++i) {
+            int curHeight = Integer.parseInt(st.nextToken());
+            if (curHeight >= prevHeight) {
+                ++cnt;
             }
-
-            if (diff > G) {
-                ++low;
-            } else {
-                ++high;
-            }
+            prevHeight = curHeight;
         }
 
-        if (res.isEmpty()) {
-            System.out.println("-1");
-        } else {
-            for (final int r : res) {
-                System.out.println(r);
-            }
-        }
+        System.out.println(cnt);
     }
 }

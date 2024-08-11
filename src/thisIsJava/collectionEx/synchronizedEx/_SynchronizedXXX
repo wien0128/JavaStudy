@@ -1,0 +1,15 @@
+Synchronized Collection
+
+• Vector, Hashtable은 Synchronized 하기에 Thread Safe 함. (구버전 호환을 위해)
+• ArrayList, HashSet, HashMap 은 Thread Safe 하지 못 함.
+
+비동기화된 메소드를 동기화된 메소드로 래핑하는 Collections.synchronizedXXX() 지원
+
+List<T> synchronizedList(List<T> list) - 동기화된 List 반환
+ex) List<T> list = Collections.synchronizedList(new ArrayList<T>());
+
+Map<K,V> synchronizedMap(Map<K,V> m) - 동기화된 Map 반환
+ex) Map<K, V> map = Collections.synchronizedMap(new HashMap<K, V>());
+
+Set<T> synchronizedSet(Set<T> s) - 동기화된 Set 반환
+ex) Set<E> set = Collections.synchronizedSet(new HashSet<E>());
