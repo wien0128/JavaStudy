@@ -1,0 +1,57 @@
+Lambda Expressions
+
+함수형 프로그래밍을 위해 Java 8 부터 지원
+
+(Param, ...) -> { DoSomthing }
+
+람다식은 익명 구현 객체로 변환 가능
+
+• 함수형 인터페이스
+단 하나의 추상 메소드만을 가지는 인터페이스
+ex 인터페이스) public interface Runnable {
+                 void run();
+             }
+ex 람다식) ( ) -> { }
+
+@FunctionalInterface
+public interface Calculable {
+    void calc(int x, int y);
+}
+= (x, y) -> { ... }
+
+• @FunctionalInterface
+함수형 인터페이스임을 보장하고 검사받기 위한 어노테이션
+
+• 매개변수 없는 람다식
+( ) -> {
+    excute;
+    excute;
+}
+( ) -> excute
+• 매개변수가 있는 람다식: 타입 생략 기본, 구체적인 타입 대신 var 가능
+(타입/var Param, ... ) -> { }
+매개변수가 하나일 경우 괄호 생략 가능
+Param -> excute
+
+• 리턴값이 있는 람다식
+(Param, ... ) -> {
+    excute;
+    return value;
+}
+(Param, ... ) -> value;
+
+• 메소드 참조: 메소드를 참조하여 불필요한 매개변수 제거를 위함
+람다식: (x, y) -> Math.max(x, y);
+-> 메소드참조: Math::max
+• 정적 메소드 참조, 클래스::메소드
+• 인스턴스 메소드 참조, 참조변수::메소드
+
+• 매개변수의 메소드 참조
+(x, y) -> { x.instanceMethod(y); }
+-> 클래스::instanceMethod
+
+• 생성자 참조: 단순히 객체 생성 후 반환한다면 참조로 대치 가능
+             생성자 오버로딩이 여러 개일 경우 메소드 시그니처가 같은 생성자를 찾아 실행함
+             해당사항 없을 경우 컴파일 오류
+(x, y) -> { return new 클래스(x, y); }
+-> 클래스::new
