@@ -3,53 +3,50 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-// 과제 13904 PriorityQueue, Greedy, Align
-// O( N logN )
+// 수열과쿼리15 14427 PriorityQueue
+// O( N logN + M logN )
 
 
 public class Main {
-    static class Assignment {
-        int deadline;
-        int score;
-
-        Assignment(int deadline, int score) {
-            this.deadline = deadline;
-            this.score = score;
-        }
-    }
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
         int n = Integer.parseInt(br.readLine());
+        int[] arr = new int[n]; // 원본 배열
 
-        List<Assignment> assignments = new ArrayList<>();
+        st = new StringTokenizer(br.readLine());
+        // 최소 힙, { 값, 인덱스 }
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) ->
+                (a[0] == b[0]) ? a[1] - b[1] : a[0] - b[0]);
         for (int i = 0; i < n; ++i) {
+            arr[i] = Integer.parseInt(st.nextToken());
+            pq.offer(new int[]{arr[i], i + 1}); // 1-based index
+        }
+
+        int m = Integer.parseInt(br.readLine());
+
+        while (m-- > 0) {
             st = new StringTokenizer(br.readLine());
-            int deadline = Integer.parseInt(st.nextToken());
-            int score = Integer.parseInt(st.nextToken());
-            assignments.add(new Assignment(deadline, score));
-        }
+            int cmd = Integer.parseInt(st.nextToken());
 
-        // 마감일 기준 오름차순 정렬
-        assignments.sort((a, b) -> a.deadline - b.deadline);
-
-        // 점수 기준 최대 힙
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
-        int totalScore = 0;
-        int idx = n - 1;
-
-        for (int day = assignments.get(assignments.size() - 1).deadline; day > 0; --day) {
-            while (idx >= 0 && assignments.get(idx).deadline >= day) {
-                maxHeap.add(assignments.get(idx).score);
-                --idx;
+            // 현재 최소값의 인덱스 출력
+            if (cmd == 2) {
+                // 최소힙의 최상단 요소가 현재 배열의 값과
+                // 일치하지 않으면 poll
+                // 최신 상태의 { 값, 인덱스 }를 보장하기 위함
+                while (!pq.isEmpty() && pq.peek()[0] != arr[pq.peek()[1] - 1]) {
+                    pq.poll();
+                }
+                System.out.println(pq.peek()[1]);
             }
-            if (!maxHeap.isEmpty()) {
-                totalScore += maxHeap.poll();
+            // 배열&힙 값 업데이트
+            else {
+                int idx = Integer.parseInt(st.nextToken());
+                int val = Integer.parseInt(st.nextToken());
+                arr[idx - 1] = val;
+                pq.offer(new int[]{val, idx});
             }
         }
-
-        System.out.println(totalScore);
     }
 }
