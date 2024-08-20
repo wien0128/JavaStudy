@@ -27,3 +27,8 @@ Stream 은 하나 이상 연결될 수 있음.
 { 컬렉션/배열 - [오리지널 스트림] - [필터링 중간 스트림] - [매핑 중간 스트림] - 집계 처리 - 결과 }
 중간 처리에서는 필터링, 매핑, 정렬 등을 수행
 최종 처리에서는 반복, 집계(카운팅, 총합, 평균) 수행
+
+• java.util.stream - Stream Interface, 리소스로부터 스트림 얻기
+[BaseStream] <- [Stream], [IntStream], [LongStream], [DoubleStream]
+BaseStream: 최상위 부모 인터페이스, 모든 스트림에서 사용 가능한 공통 메소드 정의
+Int/Long/DoubleStream: 각각 기본 타입 처리를 위한 스트림

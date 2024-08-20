@@ -1,4 +1,4 @@
-package thisIsJava.streamEx;
+package thisIsJava.streamEx.sec02;
 
 import java.util.ArrayList;
 import java.util.List;

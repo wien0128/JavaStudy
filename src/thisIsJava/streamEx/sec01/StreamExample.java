@@ -1,4 +1,4 @@
-package thisIsJava.streamEx;
+package thisIsJava.streamEx.sec01;
 
 import java.util.HashSet;
 import java.util.Set;
