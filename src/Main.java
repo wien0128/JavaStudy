@@ -3,46 +3,47 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-// 소수의곱 2014 PriorityQueue
-// 중복 계산과 저장을 방지하는 게 핵심
-// O( N * K * logM)
+// 로또 6603 DFS, BackTracking, Math
+// O( kC6 )
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringTokenizer st = null;
+        StringBuilder sb = new StringBuilder();
 
-        int k = Integer.parseInt(st.nextToken());
-        int n = Integer.parseInt(st.nextToken());
+        while (true) {
+            st = new StringTokenizer(br.readLine());
 
-        // 최소 힙
-        PriorityQueue<Long> pq = new PriorityQueue<>();
-        long[] primes = new long[k];
+            int k = Integer.parseInt(st.nextToken());
 
-        st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < k; i++) {
-            primes[i] = Long.parseLong(st.nextToken());
-            pq.offer(primes[i]);
-        }
+            if (k == 0) break;
 
-        long cur = 0;
-        while (n-- > 0) {
-            cur = pq.poll();
-
-            for (long p : primes) {
-                // 오버플로우 방지
-                if (cur > Long.MAX_VALUE / p) break;
-
-                long next = cur * p;
-                pq.offer(next);
-
-                // 중복 계산 방지
-                // 나누어 떨어진다면 이미 계산한 값
-                if (cur % p == 0) break;
+            int[] s = new int[k];
+            for (int i = 0; i < k; ++i) {
+                s[i] = Integer.parseInt(st.nextToken());
             }
+
+            DFS(s, new int[6], 0, 0, sb);
+            sb.append("\n");
         }
 
-        System.out.println(cur);
+        System.out.println(sb.toString());
+    }
+
+    private static void DFS(int[] s, int[] cur, int start, int depth, StringBuilder sb) {
+        if (depth == 6) {
+            for (int n : cur) {
+                sb.append(n).append(" ");
+            }
+            sb.append("\n");
+            return;
+        }
+
+        for (int i = start; i < s.length; ++i) {
+            cur[depth] = s[i];
+            DFS(s, cur, i + 1, depth + 1, sb);
+        }
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class CollectMain {
+public class CollectMain2 {
     public static void main(String[] args) {
         List<Student> list = new ArrayList<>();
         list.add(new Student("Hong", "Male", 87));
@@ -14,23 +14,16 @@ public class CollectMain {
         list.add(new Student("Tiem", "Male", 37));
         list.add(new Student("Baem", "Female", 82));
 
-        List<Student> maleList = list.stream()
-                .filter(s -> s.getSex().equals("Male"))
-                .toList();
-
-        maleList.stream()
-                .forEach(s -> System.out.println(s.getName()));
-
-        System.out.println();
-
-        Map<String, Integer> map = list.stream()
+        Map<String, List<Student>> map = list.stream()
                 .collect(
-                        Collectors.toMap(
-                                s -> s.getName(),
-                                s -> s.getScore()
-                        )
+                        Collectors.groupingBy(s -> s.getSex())
                 );
 
-        System.out.println(map);
+        List<Student> maleList = map.get("Male");
+        maleList.stream().forEach(s -> System.out.println(s.getName()));
+        System.out.println();
+
+        List<Student> femaleList = map.get("Female");
+        femaleList.stream().forEach(s -> System.out.println(s.getName()));
     }
 }
