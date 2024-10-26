@@ -1,49 +1,41 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
-// 로또 6603 DFS, BackTracking, Math
-// O( kC6 )
+// 암기왕 2776 Sorting
+// O( (n + m) log n )
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = null;
         StringBuilder sb = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        while (true) {
+        int t = Integer.parseInt(st.nextToken());
+
+        while (t-- > 0) {
+            int n = Integer.parseInt(br.readLine());
+            int[] note1 = new int[n];
+
             st = new StringTokenizer(br.readLine());
-
-            int k = Integer.parseInt(st.nextToken());
-
-            if (k == 0) break;
-
-            int[] s = new int[k];
-            for (int i = 0; i < k; ++i) {
-                s[i] = Integer.parseInt(st.nextToken());
+            for (int i = 0; i < n; ++i) {
+                note1[i] = Integer.parseInt(st.nextToken());
             }
 
-            DFS(s, new int[6], 0, 0, sb);
-            sb.append("\n");
-        }
+            Arrays.sort(note1);
 
-        System.out.println(sb.toString());
-    }
-
-    private static void DFS(int[] s, int[] cur, int start, int depth, StringBuilder sb) {
-        if (depth == 6) {
-            for (int n : cur) {
-                sb.append(n).append(" ");
+            int m = Integer.parseInt(br.readLine());
+            st = new StringTokenizer(br.readLine());
+            for (int i = 0; i < m; ++i) {
+                int q = Integer.parseInt(st.nextToken());
+                // note1에 q가 있으면 1, 없으면 0 추가
+                sb.append(Arrays.binarySearch(note1, q) >= 0 ? "1\n" : "0\n");
             }
-            sb.append("\n");
-            return;
         }
 
-        for (int i = start; i < s.length; ++i) {
-            cur[depth] = s[i];
-            DFS(s, cur, i + 1, depth + 1, sb);
-        }
+        System.out.println(sb);
     }
 }

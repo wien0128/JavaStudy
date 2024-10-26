@@ -7,7 +7,7 @@ import lombok.NonNull;
 // 해당 필드만 초기화 하는 생성자 추가
 @Data
 public class Member3 {
-    private final String id;
+    private final String id = "id";
     @NonNull private String name;   // Null 검사 코드가 만들어짐
     private int age;
 }
