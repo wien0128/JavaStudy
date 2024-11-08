@@ -22,7 +22,7 @@ public class LocalOuter1 {
     private int outInstanceVar = 3;
     public void process(int paramVar) { // 파라미터도 지역 변수이다
         int localVar = 1;
-        class LocalPrinter implements Printer{
+        class LocalPrinter implements Printer {
             int value = 0;
             @Override
             public void print() {
